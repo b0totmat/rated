@@ -7,6 +7,18 @@ const sequelize = new Sequelize({
     storage: './rated.sqlite'
 })
 
+async function hashPassword(user) {
+    if(!user.changed('password')) {
+        return
+    }
+
+    const salt = await bcrypt.genSalt(10)
+    const hashedPassword = await bcrypt.hash(user.password, salt)
+    console.log(hashedPassword)
+    
+    return user.password = hashedPassword
+}
+
 const Movie = sequelize.define('movie', {
     movieId: {
         type: DataTypes.INTEGER,
@@ -43,6 +55,10 @@ const User = sequelize.define('user', {
         type: DataTypes.STRING,
         unique: true,
         allowNull: false
+    }
+}, {
+    hooks: {
+        beforeSave: hashPassword
     }
 })
 
