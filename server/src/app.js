@@ -8,10 +8,6 @@ const PORT = 3000
 
 app.use(bodyParser.json())
 
-app.get('/', (req, res) => {
-    res.send('Hello World!')
-})
-
 app.use('/movies', movieRouter)
 
 sequelize.sync().then(() => {
