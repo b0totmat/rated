@@ -1,4 +1,5 @@
 import Sequelize from 'sequelize'
+import bcrypt from 'bcrypt'
 
 const { DataTypes } = Sequelize
 const sequelize = new Sequelize({
