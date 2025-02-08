@@ -1,6 +1,6 @@
 import { ref } from "vue"
 import { defineStore } from "pinia"
-import MovieService from "@/services/MovieService"
+import MovieService from "@/services/MovieService.js"
 
 export const useMovieStore = defineStore('movie', () => {
     const movies = ref([])
@@ -15,11 +15,17 @@ export const useMovieStore = defineStore('movie', () => {
         })
     }
 
-    const getMovie = (id) => {
-        MovieService.show(id)
+    const getMovie = async (id) => {
+        let movie = null
+        await MovieService.show(id)
         .then(response => {
-            return response.data
+            movie = response.data
         })
+        .catch(error => {
+            console.log(error)
+        })
+
+        return movie
     }
 
     return { movies, getMovies, getMovie }
