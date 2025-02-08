@@ -1,5 +1,8 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
+import { useTokenStore } from './stores/tokens'
+
+const tokenStore = useTokenStore()
 </script>
 
 <template>
