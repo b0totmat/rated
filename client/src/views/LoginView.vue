@@ -46,7 +46,6 @@
 
     AuthService.login(user.value)
     .then((res) => {
-        console.log(res.data)
         tokenStore.setToken(res.data.token)
         tokenStore.setUser(res.data.user)
 

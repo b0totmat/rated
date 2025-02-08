@@ -17,9 +17,6 @@ export const useRatingStore = defineStore('rating', () => {
 
     const rateMovie = async (rating) => {
         await RatingService.insert(rating)
-        .then(response => {
-            console.log(response)
-        })
         .catch(error => {
             console.log(error)
         })

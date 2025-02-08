@@ -55,7 +55,6 @@ const sendForm = (e) => {
   } else {
     AuthService.register(user.value)
     .then((res) => {
-      console.log(res.data)
       tokenStore.setToken(res.data.token)
       tokenStore.setUser(res.data.user)
 

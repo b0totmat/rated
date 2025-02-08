@@ -28,13 +28,14 @@
 </template>
 <script setup>
 import { ref, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 import { useMovieStore } from '@/stores/movies'
 import { useTokenStore } from '@/stores/tokens'
 import { useRatingStore } from '@/stores/ratings'
 
-const route = useRoute()
+const route = useRoute(),
+      router = useRouter()
 
 const movieStore = useMovieStore()
 const tokenStore = useTokenStore()
@@ -46,6 +47,8 @@ const detailedOpinion = ref('')
 
 const sendForm = (e) => {
   e.preventDefault()
+  redirect()
+
   score.value = Number(score.value)
   
   ratingStore.rateMovie({
@@ -56,8 +59,9 @@ const sendForm = (e) => {
 }
 
 onMounted(async () => {
+  redirect()
+
   const movieId = route.params.id
-  console.log(movieId)
   try {
     const response = await movieStore.getMovie(movieId)
     movie.value = response
@@ -65,5 +69,11 @@ onMounted(async () => {
     console.error(e)
   }
 })
+
+const redirect = () => {
+  if(!tokenStore.isUserLoggedIn) {
+    router.push({name: 'login'})
+  }
+}
 
 </script>
