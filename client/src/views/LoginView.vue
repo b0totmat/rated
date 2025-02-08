@@ -13,6 +13,10 @@
               <input type="password" class="form-control" id="password1" v-model="user.password">
             </div>
             <button class="btn btn-success" @click="sendForm">Submit</button>
+            <p class="text-center">
+              Not a member yet?
+              <RouterLink to="/register">Register here!</RouterLink>
+            </p>
             <div class="mt-3" id="errors" v-if="errors.length !== 0">
               <ul class="list-group">
                 <li class="list-group-item bg-danger text-light" v-for="e in errors">{{ e }}</li>
@@ -25,7 +29,7 @@
   </template>
 <script setup>
   import { ref } from 'vue'
-  import { useRouter } from 'vue-router'
+  import { useRouter, RouterLink } from 'vue-router'
   import AuthService from '@/services/AuthService'
   import { useTokenStore } from '@/stores/tokens'
   
