@@ -37,6 +37,7 @@ import { useRouter } from 'vue-router'
 import AuthService from '@/services/AuthService'
 import { useTokenStore } from '@/stores/tokens'
 
+const router = useRouter()
 const tokenStore = useTokenStore()
 
 const user = ref({
@@ -59,6 +60,8 @@ const sendForm = (e) => {
       console.log(res.data)
       tokenStore.setToken(res.data.token)
       tokenStore.setUser(res.data.user)
+
+      router.push('/')
     })
     .catch((err) => {
       errors.value.push(err.response.data.message)
