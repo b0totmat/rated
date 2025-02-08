@@ -8,7 +8,6 @@ export const useMovieStore = defineStore('movie', () => {
     const getMovies = async () => {
         await MovieService.index()
         .then(response => {
-            console.log(response.data)
             movies.value = response.data
         })
         .catch(error => {
