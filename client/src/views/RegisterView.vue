@@ -49,6 +49,8 @@ const errors = ref([])
 
 const sendForm = (e) => {
   e.preventDefault()
+  errors.value = []
+
   if(user.value.password !== passwordCheck.value) {
     errors.value.push('Passwords do not match.')
   } else {
