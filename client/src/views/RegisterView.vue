@@ -6,23 +6,62 @@
           <h1 class="h3 mb-3">Register</h1>
           <div class="mb-2">
             <label for="email" class="form-label">E-Mail address</label>
-            <input type="email" class="form-control" id="email">
+            <input type="email" class="form-control" id="email" v-model="user.email">
           </div>
           <div class="mb-2">
             <label for="username" class="form-label">Username</label>
-            <input type="text" class="form-control" id="username">
+            <input type="text" class="form-control" id="username" v-model="user.username">
           </div>
           <div class="mb-2">
             <label for="password1" class="form-label">Password</label>
-            <input type="password" class="form-control" id="password1">
+            <input type="password" class="form-control" id="password1" v-model="user.password">
           </div>
           <div class="mb-3">
             <label for="password2" class="form-label">Password (again)</label>
-            <input type="password" class="form-control" id="password2">
+            <input type="password" class="form-control" id="password2" v-model="passwordCheck">
           </div>
-          <button class="btn btn-success">Submit</button>
+          <button class="btn btn-success" @click="sendForm">Submit</button>
+          <div class="mt-3" id="errors" v-if="errors.length !== 0">
+            <ul class="list-group">
+              <li class="list-group-item bg-danger text-light" v-for="e in errors">{{ e }}</li>
+            </ul>
+          </div>
         </form>
       </div>
     </div>
   </div>
 </template>
+<script setup>
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import AuthService from '@/services/AuthService'
+import { useTokenStore } from '@/stores/tokens'
+
+const tokenStore = useTokenStore()
+
+const user = ref({
+  email: null,
+  username: null,
+  password: null
+})
+const passwordCheck = ref(null)
+const errors = ref([])
+
+const sendForm = (e) => {
+  e.preventDefault()
+  if(user.value.password !== passwordCheck.value) {
+    errors.value.push('Passwords do not match.')
+  } else {
+    AuthService.register(user.value)
+    .then((res) => {
+      console.log(res.data)
+      tokenStore.setToken(res.data.token)
+      tokenStore.setUser(res.data.user)
+    })
+    .catch((err) => {
+      errors.value.push(err.response.data.message)
+    })
+  }
+}
+
+</script>
