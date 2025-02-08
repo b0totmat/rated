@@ -15,6 +15,6 @@ const logout = () => {
 <template>
   <div class="container">
     <Header :is-user-logged-in="tokenStore.isUserLoggedIn" :logout="logout" />
+    <RouterView />
   </div>
-  <RouterView />
 </template>
