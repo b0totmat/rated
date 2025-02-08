@@ -1,5 +1,5 @@
 <template>
-  <header>
+  <header class="mb-4">
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container-fluid">
         <RouterLink class="navbar-brand" to="/">Rated</RouterLink>
