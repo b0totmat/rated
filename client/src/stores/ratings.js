@@ -5,7 +5,7 @@ import RatingService from "@/services/RatingService"
 export const useRatingStore = defineStore('rating', () => {
     const ratings = ref([])
 
-    const getRatings = async () => {
+    const loadRatings = async () => {
         await RatingService.index()
         .then(response => {
             ratings.value = response.data
@@ -15,7 +15,7 @@ export const useRatingStore = defineStore('rating', () => {
         })
     }
 
-    const insertRating = async (rating) => {
+    const rateMovie = async (rating) => {
         await RatingService.insert(rating)
         .then(response => {
             console.log(response)
@@ -25,5 +25,5 @@ export const useRatingStore = defineStore('rating', () => {
         })
     }
 
-    return { ratings, getRatings, insertRating }
+    return { ratings, loadRatings, rateMovie }
 })

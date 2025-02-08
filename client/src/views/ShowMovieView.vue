@@ -11,7 +11,7 @@
           <input type="range" class="form-range d-block" id="score" min="1" max="5" style="width: 200px" v-model="score">
         </div>
         <div class="mb-2 form-floating">
-          <textarea id="detailed-opinion" class="form-control" style="height: 120px"></textarea>
+          <textarea id="detailed-opinion" class="form-control" style="height: 120px" v-model="detailedOpinion"></textarea>
           <label for="detailed-opinion" class="form-label">Write a detailed opinion about the movie:</label>
         </div>
         <button class="btn btn-primary" @click="sendForm">Rate</button>
@@ -29,17 +29,30 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
+
 import { useMovieStore } from '@/stores/movies'
+import { useTokenStore } from '@/stores/tokens'
+import { useRatingStore } from '@/stores/ratings'
 
 const route = useRoute()
+
 const movieStore = useMovieStore()
+const tokenStore = useTokenStore()
+const ratingStore = useRatingStore()
+
 const movie = ref(null)
 const score = ref(5)
+const detailedOpinion = ref('')
 
 const sendForm = (e) => {
   e.preventDefault()
   score.value = Number(score.value)
-  console.log(score.value)
+  
+  ratingStore.rateMovie({
+    score: score.value,
+    movieId: movie.value.movieId,
+    userId: tokenStore.user.userId
+  })
 }
 
 onMounted(async () => {
