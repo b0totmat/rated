@@ -15,5 +15,15 @@ export const useRatingStore = defineStore('rating', () => {
         })
     }
 
-    return { ratings, getRatings }
+    const insertRating = async (rating) => {
+        await RatingService.insert(rating)
+        .then(response => {
+            console.log(response)
+        })
+        .catch(error => {
+            console.log(error)
+        })
+    }
+
+    return { ratings, getRatings, insertRating }
 })
