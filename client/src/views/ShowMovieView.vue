@@ -14,7 +14,7 @@
           <textarea id="detailed-opinion" class="form-control" style="height: 120px" v-model="detailedOpinion"></textarea>
           <label for="detailed-opinion" class="form-label">Write a detailed opinion about the movie:</label>
         </div>
-        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="modal-login-warning" @click="sendForm">Rate</button>
+        <button class="btn btn-primary" @click="sendForm">Rate</button>
         <div class="mt-3" id="errors" v-if="errors.length !== 0">
           <ul class="list-group">
             <li class="list-group-item bg-danger text-light" v-for="e in errors">{{ e }}</li>
@@ -46,10 +46,20 @@ const errors = ref([])
 
 const sendForm = (e) => {
   e.preventDefault()
-  redirect()
 
   score.value = Number(score.value)
   
+  if(score.value < 1) {
+    score.value = 1
+  } else if(score.value > 5) {
+    score.value = 5
+  }
+
+  if(!tokenStore.isUserLoggedIn) {
+    errors.value.push('Please log in to rate the movie.')
+    return
+  }
+
   ratingStore.rateMovie({
     score: score.value,
     movieId: movie.value.movieId,
@@ -58,7 +68,6 @@ const sendForm = (e) => {
 }
 
 onMounted(async () => {
-  redirect()
 
   const movieId = route.params.id
   try {
@@ -66,6 +75,7 @@ onMounted(async () => {
     movie.value = response
   } catch(e) {
     console.error(e)
+    errors.value.push(e)
   }
 })
 
