@@ -46,6 +46,7 @@ const errors = ref([])
 
 const sendForm = (e) => {
   e.preventDefault()
+  errors.value = []
 
   score.value = Number(score.value)
   
