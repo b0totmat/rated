@@ -18,7 +18,7 @@ async function register(req, res) {
             token: jwtSignUser(userJSON)
         })
     } catch(e) {
-        res.status(400).json({ message: e.message })
+        res.status(409).json({ message: 'An account with the specified email address already exists.' })
     }
 }
 
