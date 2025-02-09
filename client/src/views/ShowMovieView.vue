@@ -65,6 +65,8 @@ const sendForm = (e) => {
     movieId: movie.value.movieId,
     userId: tokenStore.user.userId
   })
+
+  router.push('/movies')
 }
 
 onMounted(async () => {
@@ -78,11 +80,5 @@ onMounted(async () => {
     errors.value.push(e)
   }
 })
-
-const redirect = () => {
-  if(!tokenStore.isUserLoggedIn) {
-    router.push({name: 'login'})
-  }
-}
 
 </script>
