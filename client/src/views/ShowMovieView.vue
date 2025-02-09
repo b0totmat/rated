@@ -14,14 +14,12 @@
           <textarea id="detailed-opinion" class="form-control" style="height: 120px" v-model="detailedOpinion"></textarea>
           <label for="detailed-opinion" class="form-label">Write a detailed opinion about the movie:</label>
         </div>
-        <button class="btn btn-primary" @click="sendForm">Rate</button>
-        <!--
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="modal-login-warning" @click="sendForm">Rate</button>
         <div class="mt-3" id="errors" v-if="errors.length !== 0">
           <ul class="list-group">
             <li class="list-group-item bg-danger text-light" v-for="e in errors">{{ e }}</li>
           </ul>
         </div>
-        -->
       </form>
     </div>
   </div>
@@ -44,6 +42,7 @@ const ratingStore = useRatingStore()
 const movie = ref(null)
 const score = ref(5)
 const detailedOpinion = ref('')
+const errors = ref([])
 
 const sendForm = (e) => {
   e.preventDefault()
