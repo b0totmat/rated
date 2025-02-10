@@ -5,6 +5,8 @@
           <div class="card-body">
             <h5 class="card-title">{{ m?.title }}</h5>
             <p class="card-text">Rating: 5</p>
+          </div>
+          <div class="card-footer">
             <button class="btn btn-primary" @click="redirect(m.movieId)">Rate it!</button>
           </div>
       </div>
